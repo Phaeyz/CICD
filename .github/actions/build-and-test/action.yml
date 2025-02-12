@@ -1,0 +1,20 @@
+name: Build and Test
+description: Builds and tests the project.
+runs:
+  using: "composite"
+  steps:
+  - name: Checkout Repository
+    uses: Phaeyz/CICD/.github/actions/checkout@main
+  - name: Install .NET
+    uses: Phaeyz/CICD/.github/actions/install-dotnet@main
+  - name: Install Dependencies
+    shell: bash
+    run: dotnet restore
+  - name: Build
+    shell: bash
+    run: dotnet build --no-restore
+    env:
+      MinVerVerbosity: normal
+  - name: Test
+    shell: bash
+    run: dotnet test --no-restore
